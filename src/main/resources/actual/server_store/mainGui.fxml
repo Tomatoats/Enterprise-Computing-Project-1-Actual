@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <bottom>
+      <GridPane BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button fx:id="ButtonFindItem" mnemonicParsing="false" prefHeight="25.0" prefWidth="329.0" text="Find Item #" />
+            <Button fx:id="ButtonView" mnemonicParsing="false" prefHeight="25.0" prefWidth="343.0" text="View Cart" GridPane.rowIndex="1" />
+            <Button fx:id="ButtonAdd" mnemonicParsing="false" prefHeight="25.0" prefWidth="429.0" text="Add Item # Into Cart" GridPane.columnIndex="1" />
+            <Button fx:id="ButtonCheckOut" mnemonicParsing="false" prefHeight="25.0" prefWidth="394.0" text="Check Out" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Button fx:id="ButtonEmpty" mnemonicParsing="false" prefHeight="25.0" prefWidth="369.0" text="Empty Cart - Start a New Order" GridPane.rowIndex="2" />
+            <Button fx:id="ButtonExit" mnemonicParsing="false" prefHeight="25.0" prefWidth="360.0" text="Exit (Close App)" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+         </children>
+      </GridPane>
+   </bottom>
+   <center>
+      <GridPane prefHeight="193.0" prefWidth="453.0" BorderPane.alignment="CENTER">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="LabelID" alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="312.0" text="Enter ID for Item #:" />
+            <Label fx:id="LabelQuantity" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="338.0" text="Enter Quantity for Item #:" GridPane.rowIndex="1" />
+            <Label fx:id="LabelDetails" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="363.0" text="Details for Item #:" GridPane.rowIndex="2" />
+            <Label fx:id="LabelSubtotal" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Order Subtotal for (#-1) items: " GridPane.rowIndex="3" />
+            <TextField fx:id="FieldItem" GridPane.columnIndex="1" />
+            <TextField fx:id="FieldQuantity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="FieldDetails" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="FieldSubtotal" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+   </center>
+</BorderPane>
