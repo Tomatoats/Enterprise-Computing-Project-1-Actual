@@ -64,16 +64,20 @@ public class StoreController {
             //FieldDetails.setText("You've done it!");
     }
     void findItem(){
-     if (IDRegex() == true){
+        int number = IDRegex();
+     if (number != -1){
 
-         int id = Integer.parseInt(FieldItem.getText());
+         String id = (FieldItem.getText());
          int quantity = Integer.parseInt(FieldQuantity.getText());
-         int number = inventory.indexOf(id);
+         System.out.println(id + quantity);
          int discount = 0;
          double priceActual = 6.95;
-         String toDisplay =  inventory.get(number).getId() + "\"" + inventory.get(number).getName() + "\"" +"$" + inventory.get(number).getPrice() + quantity + discount + "%" + priceActual;
+         String toDisplay =  inventory.get(number).getId() + " " + inventory.get(number).getName() + " " +"$" + inventory.get(number).getPrice() + " " + quantity + " " + discount + "% " + priceActual;
 
          FieldDetails.setText(toDisplay);
+     }
+     else {
+         //TODO: Error, not a proper ID
      }
 
 
@@ -82,27 +86,51 @@ public class StoreController {
     //public void FindItemPressed(javafx.event.ActionEvent actionEvent) {
     //}
 
-    boolean IDRegex(){
-        int temp;
+    int IDRegex(){
+        String temp;
         boolean flag = false;
         boolean finalFlag = false;
+        int index = -1;
         try {
-            temp = Integer.parseInt(FieldItem.getText());
-            flag = inventory.contains(inventory.indexOf(temp));
-            if  (inventory.get(inventory.indexOf(temp)).getHave_Any()) {
-                finalFlag = quantityRegex(inventory.indexOf(temp));
+            temp = FieldItem.getText();
+            System.out.println(temp);
+            for (Item items : inventory) {
+
+                System.out.println(inventory.indexOf(items) + " " +  inventory.get(inventory.indexOf(items)).getId());
+                System.out.println(inventory.get(inventory.indexOf(items)).getId() + "= " + temp + inventory.get(inventory.indexOf(items)).getId().equals(temp));
+                if (inventory.get(inventory.indexOf(items)).getId().equals(temp)) {
+
+                    index = inventory.indexOf(items);
+                    System.out.println(index);
+                    if (inventory.get(index).getHave_Any()){
+                        finalFlag = quantityRegex(inventory.get(index).getQuantity());
+                        return index;
+                    }
+                    else {
+                        //TODO: Error, none in inventory
+                    }
+                    break;
+                }
             }
-            else{
+            //int index = inventory.indexOf(inventory.i = temp);
+            //boolean index = inventory.equals(temp);
+            //System.out.println(index);
+            //flag = inventory.contains(inventory.indexOf(temp));
+            //if  (inventory.get(inventory.indexOf(temp)).getHave_Any()) {
+              //  finalFlag = quantityRegex(inventory.indexOf(temp));
+                //System.out.println(finalFlag);
+            //}
+            //else{
                 //TODO: Error, don't have any
-            }
+            //}
 
         }
         catch (Exception e){
             //TODO: Error, not a number
-            return false;
+            return -1;
         }
 
-        return finalFlag;
+        return index;
     }
 
     boolean quantityRegex(int number){
@@ -112,6 +140,7 @@ public class StoreController {
             temp = Integer.parseInt(FieldQuantity.getText());
             if (temp <= inventory.get(number).getQuantity()){
                 flag = true;
+                System.out.println(flag + "part 1");
             }
             else {
                 //TODO: Error, not enough quantity
