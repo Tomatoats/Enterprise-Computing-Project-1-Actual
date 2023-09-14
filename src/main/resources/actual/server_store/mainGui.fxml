@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="actual.server_store.StoreController">
    <bottom>
       <GridPane prefHeight="102.0" prefWidth="600.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -22,7 +22,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="ButtonFindItem" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="Find Item #">
+            <Button fx:id="ButtonFindItem" mnemonicParsing="false" onAction="#FindItemPressed" prefHeight="30.0" prefWidth="290.0" text="Find Item #">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
@@ -42,7 +42,7 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonExit" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="Exit (Close App)" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <Button fx:id="ButtonExit" mnemonicParsing="false" onAction="#Exit" prefHeight="30.0" prefWidth="290.0" text="Exit (Close App)" GridPane.columnIndex="1" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
@@ -62,8 +62,8 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="LabelID" alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="312.0" text="Enter ID for Item #:" />
-            <Label fx:id="LabelQuantity" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="338.0" text="Enter Quantity for Item #:" GridPane.rowIndex="1" />
+            <Label fx:id="LabelID" alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="312.0" text="Enter ID for Item #:" textFill="#11e1a2" />
+            <Label fx:id="LabelQuantity" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="338.0" text="Enter Quantity for Item #:" textFill="#0ce1d3" GridPane.rowIndex="1" />
             <Label fx:id="LabelDetails" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="363.0" text="Details for Item #:" GridPane.rowIndex="2" />
             <Label fx:id="LabelSubtotal" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Order Subtotal for (#-1) items: " GridPane.rowIndex="3" />
             <TextField fx:id="FieldItem" GridPane.columnIndex="1" />
