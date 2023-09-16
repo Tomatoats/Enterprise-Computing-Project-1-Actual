@@ -34,11 +34,11 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonCheckOut" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="Check Out" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="ButtonCheckOut" mnemonicParsing="false" onAction="#CheckOutPressed" prefHeight="30.0" prefWidth="290.0" text="Check Out" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonEmpty" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="Empty Cart - Start a New Order" GridPane.rowIndex="2">
+            <Button fx:id="ButtonEmpty" mnemonicParsing="false" onAction="#EmptyButtonPressed" prefHeight="30.0" prefWidth="290.0" text="Empty Cart - Start a New Order" GridPane.rowIndex="2">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>

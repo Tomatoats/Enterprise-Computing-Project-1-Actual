@@ -7,9 +7,18 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import static actual.server_store.StoreApplication.inventory;
 
 
@@ -78,6 +87,18 @@ public class StoreController {
     @FXML
     void ViewItemPressed(javafx.event.ActionEvent actionEvent) {
             showItems();
+    }
+
+
+    @FXML
+    void CheckOutPressed(javafx.event.ActionEvent actionEvent) {
+        checkOut();
+    }
+
+    @FXML
+    void EmptyButtonPressed(javafx.event.ActionEvent actionEvent) {
+        Empty();
+
     }
 
     void findItem(){
@@ -214,10 +235,139 @@ public class StoreController {
     public void showItems(){
         for (int i = 0; i< cart.size(); i++){
 
-            System.out.println((cart.indexOf(i) + 1 ) + ". " + cart.get(i));
+            System.out.println((i+1) + ". " + cart.get(i));
         }
 
     }
+    public void checkOut(){
+
+        Date dt = new Date();
+        String properDate = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG).format(dt);
+        System.out.println(properDate);
+
+        String transactionDate = timeConverter(properDate);
+        System.out.println(transactionDate);
+
+        System.out.printf("Number of line items: %d\n", cart.size());
+        System.out.println("Item# / ID / Title / Price / Qty / Disc % / Subtotal:\n");
+        for (int i = 0; i < cart.size(); i++){
+            System.out.println( (i+1) + " " + cart.get(i));
+        }
+        System.out.println("Order Subtotal: " + subTotal);
+        double taxRate = .06;
+        System.out.println("Tax Rate: 6%");
+        double tax = subTotal * taxRate;
+        System.out.println("Tax Amount: $" + BigDecimal.valueOf(tax).setScale(2, RoundingMode.HALF_UP));
+        double total = (subTotal + tax);
+        System.out.println("Order total: $" +BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP));
+        System.out.println("Thanks for Ordering at Nile Dot Com!");
+        updateTransaction();
+    }
+    public void Empty(){
+        cart.clear();
+        subTotal = 0;
+
+    }
+
+    public void updateTransaction() {
+        try{
+            File file = new File("out\\transactions.csv");
+            if (file.createNewFile()){
+                FileWriter fileWriter = new FileWriter("out\\transactions.csv");
+
+            }
+            else {
+
+            }
+        }
+        catch (Exception e) {
+
+        }
+    }
+    private static String timeConverter(String myString) {
+        String[] splitter = myString.split(" ", 7);
+        String month = monthDecider(splitter[0]);
+        splitter[1] =  splitter[1].replace(",", "");
+        splitter[2] =   splitter[2].replace(",","");
+        String time = timeDecider(splitter[3],splitter[4]);
+
+        String numberDate = splitter[1];
+        numberDate = numberDate.concat(month);
+        numberDate = numberDate.concat(splitter[2]);
+        numberDate =  numberDate.concat(time);
+        return numberDate;
+    }
+
+
+    private static String monthDecider(String s) {
+        String month = "00";
+        switch (s){
+            case "January":
+                month = "01";
+                break;
+            case "February":
+                month = "02";
+                break;
+            case "March":
+                month = "03";
+                break;
+            case "April":
+                month = "04";
+                break;
+            case "May":
+                month = "05";
+                break;
+            case "June":
+                month = "06";
+                break;
+            case "July":
+                month = "07";
+                break;
+            case "August":
+                month = "08";
+                break;
+            case "September":
+                month = "09";
+                break;
+            case "October":
+                month = "10";
+                break;
+            case "November":
+                month = "11";
+                break;
+            case "December":
+                month = "12";
+                break;
+        }
+        return month;
+    }
+    private static String timeDecider(String s, String s1) {
+        String sHour = "0";
+        String[] splitted = s.split(":", 3);
+        for (int i = 0; i < splitted.length;i++){
+        }
+        //String[] AMPM = splitted[2].split(" ", 3);
+        //splitted[2] = AMPM[0];
+        char[] seconds = splitted[2].toCharArray();
+        String stringSeconds = String.valueOf(seconds[0]);
+        stringSeconds = stringSeconds.concat(String.valueOf(seconds[1]));
+        int hour = Integer.parseInt(splitted[0]);
+        if (splitted[2].contains("PM")){
+            hour+= 12;
+            sHour = String.valueOf(hour);
+        }
+        else if (hour < 10){
+            sHour =  sHour.concat(String.valueOf(hour));
+
+        }
+        String time = sHour;
+        time = time.concat(splitted[1]);
+        time = time.concat(stringSeconds);
+
+        return  time;
+    }
+
+
     }
 
 
