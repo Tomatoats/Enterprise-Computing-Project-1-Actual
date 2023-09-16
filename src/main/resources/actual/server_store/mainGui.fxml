@@ -26,11 +26,11 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonView" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="View Cart" GridPane.rowIndex="1">
+            <Button fx:id="ButtonView" mnemonicParsing="false" onAction="#ViewItemPressed" prefHeight="30.0" prefWidth="290.0" text="View Cart" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonAdd" mnemonicParsing="false" prefHeight="30.0" prefWidth="290.0" text="Add Item # Into Cart" GridPane.columnIndex="1">
+            <Button fx:id="ButtonAdd" mnemonicParsing="false" onAction="#AddItemPressed" prefHeight="30.0" prefWidth="290.0" text="Add Item # Into Cart" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
