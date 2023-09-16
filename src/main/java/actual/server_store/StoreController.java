@@ -1,5 +1,6 @@
 package actual.server_store;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -97,6 +98,89 @@ public class StoreController {
         Empty();
 
     }
+    @FXML
+    private Button ErrorOutOfStockButtonOK;
+
+    @FXML
+    void OutOfStockPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private Button ErrorNoItemButtonOK;
+
+    @FXML
+    private Label ErrorNoItemLabelNotFound;
+
+    @FXML
+    void NoItemPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private Label LabelItemConfirmed;
+
+    @FXML
+    private Button buttonOkay;
+
+    @FXML
+    void buttonOkayPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private Button ViewCartButton;
+
+    @FXML
+    private Label ViewLabel;
+
+    @FXML
+    void ViewCartPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private Button CheckOutButton;
+
+    @FXML
+    private Label CheckOutLabel;
+
+    @FXML
+    void CheckOutWindowPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    private Button AreYouSureNo;
+
+    @FXML
+    private Button AreYouSureYes;
+
+    @FXML
+    void NoPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+
+    @FXML
+    void YesPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private Button cartEmptiedButton;
+
+    @FXML
+    void cartEmptiedPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+    @FXML
+    private Label NotEnoughLabel;
+
+    @FXML
+    private Button notEnoughButton;
+
+    @FXML
+    void notEnoughPressed(javafx.event.ActionEvent actionEvent) {
+
+    }
+
+
 
     void findItem(){
         int number = IDRegex();

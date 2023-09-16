@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="229.0" prefWidth="464.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="actual.server_store.StoreController">
+   <children>
+      <GridPane layoutX="1.0" layoutY="5.0" prefHeight="223.0" prefWidth="464.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="227.0" minWidth="10.0" prefWidth="86.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="378.0" minWidth="10.0" prefWidth="378.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="175.0" minHeight="10.0" prefHeight="175.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="106.0" minHeight="10.0" prefHeight="48.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label fx:id="LabelItemConfirmed" prefHeight="30.0" prefWidth="386.0" text="  Item # Accepted - Added into Cart" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="20.0" />
+               </font>
+            </Label>
+            <Button fx:id="buttonOkay" mnemonicParsing="false" onAction="#buttonOkayPressed" prefHeight="25.0" prefWidth="76.0" text="Okay" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+               <GridPane.margin>
+                  <Insets left="137.0" />
+               </GridPane.margin>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+</Pane>

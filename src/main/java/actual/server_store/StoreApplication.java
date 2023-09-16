@@ -1,5 +1,11 @@
 package actual.server_store;
 
+/* Name:  Alexys Veloz
+ Course: CNT 4714 – Fall 2023
+ Assignment title: Project 1 – Event-driven Enterprise Simulation
+ Date: Sunday September 17, 2023
+*/
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
