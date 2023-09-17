@@ -2,6 +2,7 @@ package actual.server_store;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -20,6 +21,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import static actual.server_store.StoreApplication.getScene;
 import static actual.server_store.StoreApplication.inventory;
 
 
@@ -75,11 +77,35 @@ public class StoreController {
     void AddItemPressed(javafx.event.ActionEvent actionEvent) {
         String id = FieldItem.getText();
         addItem();
-        StoreApplication.getScene("Confirmed","Confirmed");
+        int size = cart.size();
         String temp = "  Item # ";
         temp = temp.concat(id);
         temp = temp.concat(" Accepted - Added into Cart");
-        LabelItemConfirmed.setText(temp);
+        makeABox(temp,"Final Checkout!");
+
+
+        //LabelItemConfirmed.setText(temp);
+
+
+    }
+
+    private void makeABox(String temp, String title) {
+        Stage stage = new Stage();
+        VBox layout = new VBox(2);
+        Label label = new Label(temp);
+        layout.getChildren().add(label);
+        Button button = new Button();
+        button.setText("Okay");
+        button.setOnAction(value ->  {
+            Stage curStage = (Stage) button.getScene().getWindow();
+            curStage.close();
+        });
+        layout.getChildren().add(button);
+        Scene scene = new Scene(layout);
+        layout.setMinSize(400,150);
+        stage.setScene(scene);
+        stage.setTitle(title);
+        stage.show();
 
 
     }
@@ -133,7 +159,7 @@ public class StoreController {
 
     }
     @FXML
-    private Label LabelItemConfirmed;
+    public Label LabelItemConfirmed;
 
     @FXML
     private Button buttonOkay;
@@ -188,8 +214,8 @@ public class StoreController {
     void YesPressed(javafx.event.ActionEvent actionEvent) {
         Stage stage = (Stage) AreYouSureYes.getScene().getWindow();
         stage.close();
-        StoreApplication.getScene("cartEmptied", "Cart Emptied !");
-
+        Scene scene = StoreApplication.getScene("cartEmptied", "Cart Emptied !");
+        stage.setScene(scene);
         Empty();
 
     }
@@ -218,9 +244,31 @@ public class StoreController {
 
 
     void findItem(){
+       // FieldDetails.clear();
         int number = IDRegex();
-     if (number != -1){
+     if (number == -1){
+        //error, id not on file
+         String id = FieldItem.getText();
+         FieldItem.clear();
+         FieldDetails.clear();
+         FieldQuantity.clear();
 
+         String temp = "Item ID ";
+         temp = temp.concat(id);
+         temp = temp.concat(" not in file.");
+         makeABox(temp, "Error! not in file");
+
+
+     }
+     else if (number == -2){
+        //insufficient stock!
+
+     }
+     else if (number == -3){
+         //out of stock
+     }
+     else{
+         System.out.println("we got here");
          String id = (FieldItem.getText());
          int quantity = Integer.parseInt(FieldQuantity.getText());
          //System.out.println(id + quantity);
@@ -237,13 +285,6 @@ public class StoreController {
          //FieldSubtotal.setText(String.valueOf(subTotal));
 
      }
-     else {
-         //TODO: Error, not a proper ID
-         FieldItem.clear();
-         FieldDetails.clear();
-         FieldQuantity.clear();
-         StoreApplication.getScene("notEnough", "Sorry - Not Enough!");
-     }
 
 
     }
@@ -253,44 +294,57 @@ public class StoreController {
     //}
 
     int IDRegex(){
-        String temp;
+        String temp = "";
         boolean flag = false;
-        boolean finalFlag = false;
+        int finalFlag;
         int index = -1;
         try {
             temp = FieldItem.getText();
+            System.out.println(temp);
             //System.out.println(temp);
             for (Item items : inventory) {
 
                 //System.out.println(inventory.indexOf(items) + " " +  inventory.get(inventory.indexOf(items)).getId());
                 //System.out.println(inventory.get(inventory.indexOf(items)).getId() + "= " + temp + inventory.get(inventory.indexOf(items)).getId().equals(temp));
                 if (inventory.get(inventory.indexOf(items)).getId().equals(temp)) {
-
+                    System.out.printf("%s matches !\n",temp);
                     index = inventory.indexOf(items);
+                    System.out.println(index);
                     //System.out.println(index);
                     if (inventory.get(index).getHave_Any()){
-                        finalFlag = quantityRegex(inventory.get(index).getQuantity());
-                        if (finalFlag = true){
+                        System.out.println("we have some!");
+                        System.out.println("quantity = " + inventory.get(index).getQuantity());
+                        finalFlag = quantityRegex(index);
+                        if (finalFlag >=0){
+                            System.out.println("we have enough!");
                             return index;
                         }
                         else {
-                            index = -1;
+                            int amount = inventory.get(index).getQuantity();
+                            index = -2;
+                            FieldQuantity.clear();
+                            //Error, insufficientStock!
+                            String temp1 = "Insufficient stock, only ";
+                            temp1 = temp1.concat(String.valueOf(amount));
+                            temp1 = temp1.concat(" On hand.");
+                            makeABox(temp1,"Insufficient stock!");
+
                             return index;
                         }
                     }
                     else {
-                        String id = FieldItem.getText();
-                        FieldItem.clear();
-                        FieldQuantity.clear();
+                        //String id = FieldItem.getText();
+                        //FieldItem.clear();
+                        //FieldQuantity.clear();
                         FieldDetails.clear();
-                        StoreApplication.getScene("out of stock","Error - Out Of Stock");
-                        String temp1 = "Item ID #";
-                        temp1 = temp1.concat(id);
-                        temp1 = temp1.concat(" not in file");
-                        System.out.println(temp1);
-                        ErrorNoItemLabelNotFound.setText(temp1);
+                        //String temp1 = "Item ID #";
+                        //temp1 = temp1.concat(id);
+                        //temp1 = temp1.concat(" not in file");
+                        //makeABox(temp1,"Error, Not in File");
+                        getScene("out of stock", "Sorry! Out of stock");
+                        index = -3;
                     }
-                    break;
+                    //break;
                 }
             }
 
@@ -303,34 +357,41 @@ public class StoreController {
         return index;
     }
 
-    boolean quantityRegex(int number){
-        int temp;
+    int quantityRegex(int number){
+        int toReturn = -1;
+        int temp = 0;
         boolean flag = false;
+        System.out.println("we're in quality, number = " + number);
         try {
             temp = Integer.parseInt(FieldQuantity.getText());
-            if (temp <= inventory.get(number).getQuantity()){
-                flag = true;
+            System.out.println("trying,,,");
+            System.out.println(temp);
+            System.out.println("quantity wanted = " + temp + " quantity have = " + inventory.get(number).getQuantity());
+            int quanity = inventory.get(number).getQuantity();
+            toReturn = quanity - temp;
+            if ( toReturn >= 0){
                 //System.out.println(flag + "part 1");
             }
             else {
                 //TODO: Error, not enough quantity
-                int howMuch = inventory.get(number).getQuantity();
-                FieldDetails.clear();
-                StoreApplication.getScene("notEnough","Sorry - Not Enough!");
-                String build = "Insufficient stock, only ";
-                String temp1 = String.valueOf(howMuch);
-                build.concat(temp1);
-                build.concat(" on hand. Please Reduce the quantity.");
-                System.out.println(build);
-                NotEnoughLabel.setText(build);
-                flag = false;
+                //int howMuch = inventory.get(number).getQuantity();
+                //FieldDetails.clear();
+                //StoreApplication.getScene("notEnough","Sorry - Not Enough!");
+                //String build = "Insufficient stock, only ";
+                //String temp1 = String.valueOf(howMuch);
+                //build.concat(temp1);
+                //build.concat(" on hand. Please Reduce the quantity.");
+                //System.out.println(build);
+                //NotEnoughLabel.setText(build);
+                //makeABox(build,"Sorry - Not Enough!");
+               return  toReturn;
             }
         }
         catch (Exception e){
             //TODO: Error, not a number
-            return flag;
+            return toReturn;
         }
-        return flag;
+        return toReturn;
     }
     private double discountCalc(int quantity) {
         double discount = 1;
@@ -373,7 +434,7 @@ public class StoreController {
         FieldSubtotal.setText(String.valueOf(subTotal));
         FieldItem.clear();
         FieldQuantity.clear();
-        FieldDetails.clear();
+        //FieldDetails.clear();
         String temp = "Enter ID for Item #";
         temp = temp.concat(String.valueOf(i+1));
         temp = temp.concat(":");
@@ -417,10 +478,12 @@ public class StoreController {
             temp =  temp.concat(". ");
             temp =  temp.concat(cart.get(i));
             temp = temp.concat("\n");
+            System.out.println(temp);
             Label label = new Label(temp);
             layout.getChildren().add(label);
+            temp = "";
 
-            System.out.println((i+1) + ". " + cart.get(i));
+            //System.out.println((i+1) + ". " + cart.get(i));
         }
         Button button = new Button();
         button.setText("Okay");
@@ -484,6 +547,11 @@ public class StoreController {
         System.out.println("Thanks for Ordering at Nile Dot Com!");
         temp = "Thanks for Ordering at Nile Dot Com!";
         checkScene.add(temp);
+        FieldItem.setDisable(true);
+        FieldQuantity.setDisable(true);
+        ButtonFindItem.setDisable(true);
+        ButtonAdd.setDisable(true);
+        ButtonCheckOut.setDisable(true);
         sceneCheckOut(checkScene);
         updateTransaction(properDate);
     }
@@ -528,6 +596,11 @@ public class StoreController {
         FieldItem.clear();
         FieldDetails.clear();
         FieldSubtotal.clear();
+        FieldItem.setDisable(false);
+        FieldQuantity.setDisable(false);
+        ButtonFindItem.setDisable(false);
+        ButtonAdd.setDisable(false);
+        ButtonCheckOut.setDisable(false);
 
     }
 

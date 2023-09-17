@@ -22,7 +22,7 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Button fx:id="ButtonFindItem" mnemonicParsing="false" onAction="#FindItemPressed" prefHeight="30.0" prefWidth="290.0" text="Find Item #">
+            <Button fx:id="ButtonFindItem" mnemonicParsing="false" onAction="#FindItemPressed" prefHeight="30.0" prefWidth="290.0" text="Find Item #1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
@@ -30,7 +30,7 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonAdd" disable="true" mnemonicParsing="false" onAction="#AddItemPressed" prefHeight="30.0" prefWidth="290.0" text="Add Item # Into Cart" GridPane.columnIndex="1">
+            <Button fx:id="ButtonAdd" disable="true" mnemonicParsing="false" onAction="#AddItemPressed" prefHeight="30.0" prefWidth="290.0" text="Add Item #1 Into Cart" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>

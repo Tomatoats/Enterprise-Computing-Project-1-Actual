@@ -28,7 +28,7 @@ public class StoreApplication extends Application {
         Scene scene = sceneMap.get("mainGui");
         //FXMLLoader fxmlLoader = new FXMLLoader(StoreApplication.class.getResource("mainGui.fxml"));
         //Scene scene = new Scene(fxmlLoader.load());
-        stage.setTitle("DainTree.com - Fall 2023");
+        stage.setTitle("Nile Dot Com - Fall 2023");
         stage.setScene(scene);
         stage.show();
     }
@@ -85,12 +85,12 @@ public class StoreApplication extends Application {
         sceneMap.put("viewCart",toAdd);
 
     }
-    public static void getScene(String key, String title){
+    public static Scene getScene(String key, String title){
         Scene scene = sceneMap.get(key);
         Stage stage = new Stage();
         stage.setTitle(title);
         stage.setScene(scene);
         stage.show();
-
+        return scene;
         }
     }
