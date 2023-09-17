@@ -8,23 +8,26 @@ package actual.server_store;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.*;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.io.File;
-import java.util.Scanner;
 
 public class StoreApplication extends Application {
     static ArrayList<Item> inventory = new ArrayList<>();
+     static Map<String,Scene> sceneMap = new HashMap<>();
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(StoreApplication.class.getResource("mainGui.fxml"));
-        Scene scene = new Scene(fxmlLoader.load());
+        addScenes();
+        Scene scene = sceneMap.get("mainGui");
+        //FXMLLoader fxmlLoader = new FXMLLoader(StoreApplication.class.getResource("mainGui.fxml"));
+        //Scene scene = new Scene(fxmlLoader.load());
         stage.setTitle("DainTree.com - Fall 2023");
         stage.setScene(scene);
         stage.show();
@@ -50,6 +53,44 @@ public class StoreApplication extends Application {
 
         launch();
     }
+    public void addScenes() throws IOException {
+        //create a map and add all fxml files to it
 
+        Parent add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("mainGui.fxml")));
+        Scene toAdd = new Scene(add);
+        sceneMap.put("mainGui",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("are you sure.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("are you sure",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("cartEmptied.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("cartEmptied",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("checkOut.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("checkOut",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("Confirmed.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("Confirmed",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("ErrorNotFound.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("ErrorNotFound",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("notEnough.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("notEnough",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("out of stock Error.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("out of stock",toAdd);
+        add =  FXMLLoader.load(Objects.requireNonNull(getClass().getResource("viewCart.fxml")));
+        toAdd = new Scene(add);
+        sceneMap.put("viewCart",toAdd);
 
-}
+    }
+    public static void getScene(String key, String title){
+        Scene scene = sceneMap.get(key);
+        Stage stage = new Stage();
+        stage.setTitle(title);
+        stage.setScene(scene);
+        stage.show();
+
+        }
+    }

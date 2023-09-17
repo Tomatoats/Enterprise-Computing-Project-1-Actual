@@ -2,11 +2,15 @@ package actual.server_store;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.PrintWriter;
@@ -69,7 +73,15 @@ public class StoreController {
 
     @FXML
     void AddItemPressed(javafx.event.ActionEvent actionEvent) {
+        String id = FieldItem.getText();
         addItem();
+        StoreApplication.getScene("Confirmed","Confirmed");
+        String temp = "  Item # ";
+        temp = temp.concat(id);
+        temp = temp.concat(" Accepted - Added into Cart");
+        LabelItemConfirmed.setText(temp);
+
+
     }
 
     @FXML
@@ -84,7 +96,7 @@ public class StoreController {
     }
     @FXML
     void ViewItemPressed(javafx.event.ActionEvent actionEvent) {
-            showItems();
+        showItems();
     }
 
 
@@ -95,7 +107,8 @@ public class StoreController {
 
     @FXML
     void EmptyButtonPressed(javafx.event.ActionEvent actionEvent) {
-        Empty();
+        StoreApplication.getScene("are you sure", "Are you Sure?");
+        //Empty();
 
     }
     @FXML
@@ -103,6 +116,8 @@ public class StoreController {
 
     @FXML
     void OutOfStockPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) ErrorOutOfStockButtonOK.getScene().getWindow();
+        stage.close();
 
     }
     @FXML
@@ -113,6 +128,8 @@ public class StoreController {
 
     @FXML
     void NoItemPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) ErrorNoItemButtonOK.getScene().getWindow();
+        stage.close();
 
     }
     @FXML
@@ -123,6 +140,9 @@ public class StoreController {
 
     @FXML
     void buttonOkayPressed(javafx.event.ActionEvent actionEvent) {
+        //confirmed
+        Stage stage = (Stage) buttonOkay.getScene().getWindow();
+        stage.close();
 
     }
 
@@ -134,16 +154,20 @@ public class StoreController {
 
     @FXML
     void ViewCartPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) ViewCartButton.getScene().getWindow();
+        stage.close();
 
     }
     @FXML
     private Button CheckOutButton;
 
     @FXML
-    private Label CheckOutLabel;
+    public Label CheckOutLabel;
 
     @FXML
     void CheckOutWindowPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) CheckOutButton.getScene().getWindow();
+        stage.close();
 
     }
 
@@ -155,11 +179,18 @@ public class StoreController {
 
     @FXML
     void NoPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) AreYouSureNo.getScene().getWindow();
+        stage.close();
 
     }
 
     @FXML
     void YesPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) AreYouSureYes.getScene().getWindow();
+        stage.close();
+        StoreApplication.getScene("cartEmptied", "Cart Emptied !");
+
+        Empty();
 
     }
     @FXML
@@ -167,6 +198,8 @@ public class StoreController {
 
     @FXML
     void cartEmptiedPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) cartEmptiedButton.getScene().getWindow();
+        stage.close();
 
     }
     @FXML
@@ -177,6 +210,8 @@ public class StoreController {
 
     @FXML
     void notEnoughPressed(javafx.event.ActionEvent actionEvent) {
+        Stage stage = (Stage) notEnoughButton.getScene().getWindow();
+        stage.close();
 
     }
 
@@ -190,16 +225,24 @@ public class StoreController {
          int quantity = Integer.parseInt(FieldQuantity.getText());
          //System.out.println(id + quantity);
          double discount = discountCalc(quantity);
-         double priceActual = (quantity * inventory.get(number).getPrice()) * discount;
+         double price = (quantity * inventory.get(number).getPrice()) * discount;
+         String temp = String.valueOf(BigDecimal.valueOf(price).setScale(2,RoundingMode.HALF_UP));
+         double priceActual = Double.parseDouble(temp);
          String showDiscount = showDisc(discount);
          String toDisplay =  inventory.get(number).getId() + " " + inventory.get(number).getName() + " " +"$" + inventory.get(number).getPrice() + " " + quantity + " " + showDiscount + "% " + priceActual;
          FieldDetails.setText(toDisplay);
          priceHolder=priceActual;
-         FieldSubtotal.setText(String.valueOf(subTotal));
+         ButtonAdd.setDisable(false);
+         ButtonFindItem.setDisable(true);
+         //FieldSubtotal.setText(String.valueOf(subTotal));
 
      }
      else {
          //TODO: Error, not a proper ID
+         FieldItem.clear();
+         FieldDetails.clear();
+         FieldQuantity.clear();
+         StoreApplication.getScene("notEnough", "Sorry - Not Enough!");
      }
 
 
@@ -227,25 +270,29 @@ public class StoreController {
                     //System.out.println(index);
                     if (inventory.get(index).getHave_Any()){
                         finalFlag = quantityRegex(inventory.get(index).getQuantity());
-                        return index;
+                        if (finalFlag = true){
+                            return index;
+                        }
+                        else {
+                            index = -1;
+                            return index;
+                        }
                     }
                     else {
-                        //TODO: Error, none in inventory
+                        String id = FieldItem.getText();
+                        FieldItem.clear();
+                        FieldQuantity.clear();
+                        FieldDetails.clear();
+                        StoreApplication.getScene("out of stock","Error - Out Of Stock");
+                        String temp1 = "Item ID #";
+                        temp1 = temp1.concat(id);
+                        temp1 = temp1.concat(" not in file");
+                        System.out.println(temp1);
+                        ErrorNoItemLabelNotFound.setText(temp1);
                     }
                     break;
                 }
             }
-            //int index = inventory.indexOf(inventory.i = temp);
-            //boolean index = inventory.equals(temp);
-            //System.out.println(index);
-            //flag = inventory.contains(inventory.indexOf(temp));
-            //if  (inventory.get(inventory.indexOf(temp)).getHave_Any()) {
-              //  finalFlag = quantityRegex(inventory.indexOf(temp));
-                //System.out.println(finalFlag);
-            //}
-            //else{
-                //TODO: Error, don't have any
-            //}
 
         }
         catch (Exception e){
@@ -267,6 +314,16 @@ public class StoreController {
             }
             else {
                 //TODO: Error, not enough quantity
+                int howMuch = inventory.get(number).getQuantity();
+                FieldDetails.clear();
+                StoreApplication.getScene("notEnough","Sorry - Not Enough!");
+                String build = "Insufficient stock, only ";
+                String temp1 = String.valueOf(howMuch);
+                build.concat(temp1);
+                build.concat(" on hand. Please Reduce the quantity.");
+                System.out.println(build);
+                NotEnoughLabel.setText(build);
+                flag = false;
             }
         }
         catch (Exception e){
@@ -309,46 +366,168 @@ public class StoreController {
 
     public void addItem(){
         cart.add(FieldDetails.getText());
-
+        int i = cart.size();
         subTotal+=priceHolder;
+        String sub = String.valueOf(BigDecimal.valueOf(subTotal).setScale(2,RoundingMode.HALF_UP));
+        subTotal = Double.parseDouble(sub);
+        FieldSubtotal.setText(String.valueOf(subTotal));
+        FieldItem.clear();
+        FieldQuantity.clear();
+        FieldDetails.clear();
+        String temp = "Enter ID for Item #";
+        temp = temp.concat(String.valueOf(i+1));
+        temp = temp.concat(":");
+        LabelID.setText(temp);
+        temp = "Enter Quantity for Item #";
+        temp = temp.concat(String.valueOf(i+1));
+        temp = temp.concat(":");
+        LabelQuantity.setText(temp);
+        temp = "Details for Item #";
+        temp = temp.concat(String.valueOf(i+1));
+        temp = temp.concat(":");
+        LabelDetails.setText(temp);
+        temp = "Subtotal for";
+        temp = temp.concat(String.valueOf(i));
+        temp = temp.concat(" item(s):");
+        LabelSubtotal.setText(temp);
+        temp = "Find Item #";
+        temp = temp.concat(String.valueOf(i+1));
+        ButtonFindItem.setText(temp);
+        temp = "Add Item #";
+        temp = temp.concat(String.valueOf(i+1));
+        temp = temp.concat(" Into Cart");
+        ButtonAdd.setText(temp);
+        ButtonView.setDisable(false);
+        ButtonCheckOut.setDisable(false);
+        ButtonFindItem.setDisable(false);
+        ButtonAdd.setDisable(true);
+
+
         //TODO: ADD a scene that shows (Item added to cart)
     }
 
     public void showItems(){
-        for (int i = 0; i< cart.size(); i++){
+        String temp = "";
+        int size = cart.size();
+        Stage stage = new Stage();
+        VBox layout = new VBox(size+1);
+        //StackPane view = new StackPane();
+        for (int i = 0; i< size; i++){
+            temp =  temp.concat(String.valueOf(i+1));
+            temp =  temp.concat(". ");
+            temp =  temp.concat(cart.get(i));
+            temp = temp.concat("\n");
+            Label label = new Label(temp);
+            layout.getChildren().add(label);
 
             System.out.println((i+1) + ". " + cart.get(i));
         }
+        Button button = new Button();
+        button.setText("Okay");
+        button.setOnAction(value ->  {
+            Stage curStage = (Stage) button.getScene().getWindow();
+            curStage.close();
+        });
+        layout.getChildren().add(button);
+        button.translateXProperty();
+        //layout.setPrefSize(100,200);
+
+        Scene scene = new Scene(layout);
+        stage.setScene(scene);
+        stage.setTitle("View Cart!");
+        stage.show();
+
 
     }
     public void checkOut(){
-
+        ArrayList<String> checkScene = new ArrayList<>();
         Date dt = new Date();
         String properDate = DateFormat.getDateTimeInstance(DateFormat.LONG,DateFormat.LONG).format(dt);
         properDate = properDate.replace(" "," ");
         System.out.println(properDate);
+        checkScene.add(properDate);
+        String temp = "Number of line items: ";
+        temp = temp.concat(String.valueOf(cart.size()));
+        checkScene.add(temp);
+        temp = "Item# / ID / Title / Price / Qty / Disc % / Subtotal:";
+        checkScene.add(temp);
 
 
         System.out.printf("Number of line items: %d\n", cart.size());
         System.out.println("Item# / ID / Title / Price / Qty / Disc % / Subtotal:\n");
         for (int i = 0; i < cart.size(); i++){
             System.out.println( (i+1) + " " + cart.get(i));
+            temp = String.valueOf(i+1);
+            temp =  temp.concat(". ");
+            temp = temp.concat(cart.get(i));
+            checkScene.add(temp);
         }
+        temp = "Order Subtotal: ";
+        temp = temp.concat(String.valueOf(BigDecimal.valueOf(subTotal).setScale(2,RoundingMode.HALF_UP)));
+        checkScene.add(temp);
         System.out.println("Order Subtotal: " + subTotal);
         double taxRate = .06;
         System.out.println("Tax Rate: 6%");
+        temp = "Tax Rate: 6%";
+        checkScene.add(temp);
         double tax = subTotal * taxRate;
+        temp = String.valueOf(tax);
+        temp = "Tax Amount: $";
+        temp = temp.concat(String.valueOf(BigDecimal.valueOf(tax).setScale(2,RoundingMode.HALF_UP)));
         System.out.println("Tax Amount: $" + BigDecimal.valueOf(tax).setScale(2, RoundingMode.HALF_UP));
+        checkScene.add(temp);
         double total = (subTotal + tax);
+        temp = "Order total: $";
+        temp = temp.concat(String.valueOf(BigDecimal.valueOf(total).setScale(2,RoundingMode.HALF_UP)));
         System.out.println("Order total: $" +BigDecimal.valueOf(total).setScale(2, RoundingMode.HALF_UP));
+        checkScene.add(temp);
         System.out.println("Thanks for Ordering at Nile Dot Com!");
+        temp = "Thanks for Ordering at Nile Dot Com!";
+        checkScene.add(temp);
+        sceneCheckOut(checkScene);
         updateTransaction(properDate);
     }
 
+    public void sceneCheckOut(ArrayList<String> checkScene){
+        int size = checkScene.size();
+        Stage stage = new Stage();
+        VBox layout = new VBox(size+1);
+        for (int i = 0; i < size; i++){
+            Label label = new Label(checkScene.get(i));
+            layout.getChildren().add(label);
+
+        }
+        Button button = new Button();
+        button.setText("Okay");
+        button.setOnAction(value ->  {
+            Stage curStage = (Stage) button.getScene().getWindow();
+            curStage.close();
+        });
+        layout.getChildren().add(button);
+        //layout.setPrefSize(100,200);
+
+        Scene scene = new Scene(layout);
+        stage.setScene(scene);
+        stage.setTitle("Final Checkout!");
+        stage.show();
+
+
+    }
 
     public void Empty(){
-        cart.clear();
+        Stage stage1 = (Stage) FieldSubtotal.getScene().getWindow();
+        stage1.close();
+        StoreApplication.getScene("mainGui", "Nile Dot Com");
+
+        for (int i = 0; i< cart.size();i++){
+            cart.remove(i);
+        }
+        System.out.println(cart.size());
         subTotal = 0;
+        FieldQuantity.clear();
+        FieldItem.clear();
+        FieldDetails.clear();
+        FieldSubtotal.clear();
 
     }
 
@@ -365,14 +544,8 @@ public class StoreController {
                     out.write(transactionID);
                     out.write("\n");
 
-                    //out.write(transactionDate);
-                    //out.write(", ");
-                    //out.write(cart.get(i));
-                    //out.write(", ");
-                    //out.write(properDate);
-                    //out.write("\n");
                 }
-                out.write("\n\n");
+                out.write("\n");
                 out.close();
 
             }
@@ -384,14 +557,8 @@ public class StoreController {
                     String transactionID = makeTransactionCart(transactionDate,cart.get(i),properDate);
                     out.write(transactionID);
                     out.write("\n");
-                    //out.write(transactionDate);
-                    //out.write(", ");
-                    //out.write(cart.get(i));
-                    //out.write(", ");
-                    //out.write(properDate);
-                    //out.write("\n");
                 }
-                out.write("\n\n");
+                out.write("\n");
                 out.close();
             }
         }

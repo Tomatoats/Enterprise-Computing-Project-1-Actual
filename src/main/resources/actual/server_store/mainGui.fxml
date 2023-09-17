@@ -26,15 +26,15 @@
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonView" mnemonicParsing="false" onAction="#ViewItemPressed" prefHeight="30.0" prefWidth="290.0" text="View Cart" GridPane.rowIndex="1">
+            <Button fx:id="ButtonView" disable="true" mnemonicParsing="false" onAction="#ViewItemPressed" prefHeight="30.0" prefWidth="290.0" text="View Cart" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonAdd" mnemonicParsing="false" onAction="#AddItemPressed" prefHeight="30.0" prefWidth="290.0" text="Add Item # Into Cart" GridPane.columnIndex="1">
+            <Button fx:id="ButtonAdd" disable="true" mnemonicParsing="false" onAction="#AddItemPressed" prefHeight="30.0" prefWidth="290.0" text="Add Item # Into Cart" GridPane.columnIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
-            <Button fx:id="ButtonCheckOut" mnemonicParsing="false" onAction="#CheckOutPressed" prefHeight="30.0" prefWidth="290.0" text="Check Out" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <Button fx:id="ButtonCheckOut" disable="true" mnemonicParsing="false" onAction="#CheckOutPressed" prefHeight="30.0" prefWidth="290.0" text="Check Out" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <GridPane.margin>
                   <Insets left="5.0" />
                </GridPane.margin></Button>
@@ -62,10 +62,10 @@
           <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
         </rowConstraints>
          <children>
-            <Label fx:id="LabelID" alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="312.0" text="Enter ID for Item #:" textFill="#11e1a2" />
-            <Label fx:id="LabelQuantity" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="338.0" text="Enter Quantity for Item #:" textFill="#0ce1d3" GridPane.rowIndex="1" />
-            <Label fx:id="LabelDetails" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="363.0" text="Details for Item #:" GridPane.rowIndex="2" />
-            <Label fx:id="LabelSubtotal" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Order Subtotal for (#-1) items: " GridPane.rowIndex="3" />
+            <Label fx:id="LabelID" alignment="CENTER_RIGHT" prefHeight="47.0" prefWidth="312.0" text="Enter ID for Item #1:" textFill="#11e1a2" />
+            <Label fx:id="LabelQuantity" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="338.0" text="Enter Quantity for Item #1:" textFill="#0ce1d3" GridPane.rowIndex="1" />
+            <Label fx:id="LabelDetails" alignment="CENTER_RIGHT" prefHeight="18.0" prefWidth="304.0" text="Details for Item #1:" textFill="#bf1010" GridPane.rowIndex="2" />
+            <Label fx:id="LabelSubtotal" alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="404.0" text="Order Subtotal for 0 item(s): " textFill="#c60c0c" GridPane.rowIndex="3" />
             <TextField fx:id="FieldItem" GridPane.columnIndex="1" />
             <TextField fx:id="FieldQuantity" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <TextField fx:id="FieldDetails" editable="false" GridPane.columnIndex="1" GridPane.rowIndex="2" />
